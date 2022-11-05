@@ -12,6 +12,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue,
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
@@ -26,47 +27,68 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  int currentPage = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromARGB(255, 197, 197, 197),
+      backgroundColor: const Color.fromARGB(255, 197, 197, 197),
       appBar: AppBar(
         title: Text(widget.title),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: (value) {
+          setState(() {
+            currentPage = value;
+          });
+        },
+        currentIndex: currentPage,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: "menu",
+          ),
+        ],
+      ),
       body: Container(
-        margin: new EdgeInsets.symmetric(horizontal: 10.0),
+        margin: const EdgeInsets.symmetric(horizontal: 10.0),
         width: 180,
-        height: 180,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SfRadialGauge(
-              axes: <RadialAxis>[
-                RadialAxis(
-                  minimum: 0,
-                  maximum: 7.1,
-                  interval: 1,
-                  ranges: <GaugeRange>[
-                    GaugeRange(
-                      startValue: 0,
-                      endValue: 6,
-                      color: Color.fromARGB(255, 83, 83, 83),
-                    ),
-                    GaugeRange(
-                      startValue: 6,
-                      endValue: 7.1,
-                      color: Colors.red,
-                    )
-                  ],
-                  pointers: <GaugePointer>[
-                    NeedlePointer(
-                      value: 0,
-                    )
-                  ],
-                )
-              ],
-            )
-          ],
+        child: FittedBox(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              SfRadialGauge(
+                axes: <RadialAxis>[
+                  RadialAxis(
+                    minimum: 0,
+                    maximum: 7.1,
+                    interval: 1,
+                    ranges: <GaugeRange>[
+                      GaugeRange(
+                        startValue: 0,
+                        endValue: 6,
+                        color: const Color.fromARGB(255, 83, 83, 83),
+                      ),
+                      GaugeRange(
+                        startValue: 6,
+                        endValue: 7.1,
+                        color: Colors.red,
+                      )
+                    ],
+                    pointers: const <GaugePointer>[
+                      NeedlePointer(
+                        value: 0,
+                      )
+                    ],
+                  )
+                ],
+              )
+            ],
+          ),
         ),
       ),
     );
